@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#18372f">
+    <title>Balancing Academic Achievement and Practical Skills in Modern Education</title>
+    <style>
+        :root {
+            color-scheme: light;
+            --ink: #1c2d28;
+            --muted: #687771;
+            --paper: #f5f6f1;
+            --green: #18372f;
+            --lime: #c7e875;
+            --line: #dce3dc;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            background: var(--paper);
+            color: var(--ink);
+            font-family: Georgia, "Times New Roman", serif;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        .topbar {
+            min-height: 58px;
+            padding: 0 7vw;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+            background: var(--green);
+            color: #f5f7f2;
+            font: 700 12px/1.2 "Trebuchet MS", sans-serif;
+            letter-spacing: 1.2px;
+            text-transform: uppercase;
+        }
+
+        .brand { display: flex; align-items: center; gap: 10px; }
+        .brand-mark {
+            width: 22px;
+            height: 22px;
+            display: grid;
+            place-items: center;
+            border: 1px solid var(--lime);
+            border-radius: 50%;
+            color: var(--lime);
+            font-size: 12px;
+        }
+
+        .topbar-note { color: #c5d1ca; font-weight: 400; letter-spacing: .7px; }
+
+        .article-heading {
+            padding: 76px 24px 62px;
+            background: var(--green);
+            color: #f5f7f2;
+        }
+
+        .heading-inner, article { width: min(100%, 760px); margin: 0 auto; }
+
+        .eyebrow {
+            margin: 0 0 20px;
+            color: var(--lime);
+            font: 700 11px/1.4 "Trebuchet MS", sans-serif;
+            letter-spacing: 1.7px;
+            text-transform: uppercase;
+        }
+
+        h1 {
+            max-width: 700px;
+            margin: 0;
+            font-size: clamp(42px, 7vw, 72px);
+            font-weight: 400;
+            line-height: 1.04;
+        }
+
+        .subtitle {
+            max-width: 590px;
+            margin: 22px 0 28px;
+            color: #d4ded7;
+            font-size: 18px;
+            line-height: 1.55;
+        }
+
+        .article-meta {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #c5d1ca;
+            font: 12px/1.4 "Trebuchet MS", sans-serif;
+        }
+
+        .meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--lime); }
+
+        article {
+            padding: 42px 24px 90px;
+            font-size: 19px;
+            line-height: 1.86;
+        }
+
+        article p { margin: 0 0 25px; }
+
+        .reading-hint {
+            margin: 0 0 28px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--line);
+            color: var(--muted);
+            font: 12px/1.5 "Trebuchet MS", sans-serif;
+        }
+
+        .term {
+            position: relative;
+            display: inline;
+            padding: 0;
+            border: 0;
+            border-bottom: 1px dotted #45866b;
+            background: transparent;
+            color: #205b43;
+            font: inherit;
+            font-weight: 700;
+            line-height: inherit;
+            cursor: help;
+        }
+
+        .term::after {
+            position: absolute;
+            z-index: 5;
+            bottom: calc(100% + 9px);
+            left: 50%;
+            width: max-content;
+            max-width: min(260px, calc(100vw - 40px));
+            padding: 8px 11px;
+            border-radius: 4px;
+            background: #172923;
+            color: #fff;
+            content: attr(data-meaning);
+            font: 13px/1.4 "Trebuchet MS", sans-serif;
+            text-align: left;
+            white-space: normal;
+            opacity: 0;
+            visibility: hidden;
+            transform: translate(-50%, 4px);
+            transition: opacity 140ms ease, transform 140ms ease, visibility 140ms;
+            pointer-events: none;
+        }
+
+        .term:hover::after,
+        .term:focus-visible::after,
+        .term.is-open::after { opacity: 1; visibility: visible; transform: translate(-50%, 0); }
+
+        .term:focus-visible { outline: 2px solid #d4824c; outline-offset: 3px; }
+
+        @media (max-width: 600px) {
+            .topbar { min-height: 52px; padding: 0 20px; }
+            .topbar-note { font-size: 10px; }
+            .article-heading { padding: 56px 22px 44px; }
+            .subtitle { font-size: 16px; }
+            article { padding: 32px 22px 64px; font-size: 17px; line-height: 1.8; }
+            .term { cursor: pointer; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+        }
+
+        [hidden] { display: none !important; }
+
+        .entry-screen {
+            min-height: 100vh;
+            min-height: 100svh;
+            padding: 28px 22px 22px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background: #0c0915;
+            color: #f5f2ff;
+            font-family: "Trebuchet MS", sans-serif;
+            text-align: center;
+        }
+
+        .entry-brand {
+            margin-bottom: 30px;
+            padding: 8px 20px;
+            border-radius: 30px;
+            background: #c7afff;
+            color: #201538;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 2px;
+        }
+
+        .entry-content { width: min(100%, 520px); }
+
+        .visually-hidden {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        .entry-title {
+            max-width: none;
+            margin: 0;
+            color: #eee9ff;
+            font-family: Georgia, "Times New Roman", serif;
+            font-size: clamp(40px, 9vw, 58px);
+            font-weight: 700;
+            line-height: 1.02;
+        }
+
+        .entry-copy {
+            margin: 16px 0 38px;
+            color: #c2b7de;
+            font-size: 16px;
+            line-height: 1.55;
+        }
+
+        .entry-form { display: grid; gap: 18px; }
+
+        .entry-input {
+            width: 100%;
+            min-height: 56px;
+            padding: 0 18px;
+            border: 1px solid #39304f;
+            border-radius: 10px;
+            outline: none;
+            background: #151120;
+            color: #f5f2ff;
+            font: 16px "Trebuchet MS", sans-serif;
+        }
+
+        .entry-input::placeholder { color: #a58bd5; opacity: 1; }
+        .entry-input:focus { border-color: #b89aff; box-shadow: 0 0 0 3px #b89aff24; }
+        .entry-input:disabled { cursor: not-allowed; opacity: .6; }
+
+        .entry-button, .entry-secondary {
+            min-height: 56px;
+            padding: 0 20px;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            font: 700 16px "Trebuchet MS", sans-serif;
+            cursor: pointer;
+        }
+
+        .entry-button { background: #c7afff; color: #201538; }
+        .entry-button:hover { background: #d3c2ff; }
+        .entry-button:disabled { cursor: not-allowed; opacity: .55; }
+
+        .entry-secondary {
+            margin-top: 20px;
+            border-color: #39304f;
+            background: #151120;
+            color: #e8e1f5;
+        }
+
+        .entry-secondary:hover { border-color: #8f78bd; }
+        .entry-button:focus-visible, .entry-secondary:focus-visible { outline: 2px solid #f0c96b; outline-offset: 3px; }
+        .entry-footer { margin: 28px 0 0; color: #827894; font-size: 11px; letter-spacing: 1px; }
+        .entry-error { margin: 0; color: #ffaaa8; font: 13px/1.4 "Trebuchet MS", sans-serif; }
+
+        .dashboard-page {
+            min-height: 100vh;
+            min-height: 100svh;
+            padding: 28px 24px;
+            background: #0c0915;
+            color: #f5f2ff;
+            font-family: "Trebuchet MS", sans-serif;
+        }
+
+        .dashboard-top, .dashboard-content { width: min(100%, 760px); margin: 0 auto; }
+        .dashboard-top { display: flex; justify-content: space-between; align-items: center; gap: 16px; }
+        .dashboard-top .entry-brand { margin: 0; }
+        .dashboard-back { padding: 8px 12px; border: 1px solid #39304f; border-radius: 6px; background: transparent; color: #e8e1f5; cursor: pointer; }
+        .dashboard-content { padding-top: clamp(48px, 12vh, 100px); }
+        .dashboard-kicker { margin: 0 0 14px; color: #c7afff; font-size: 11px; font-weight: 700; letter-spacing: 1.7px; text-transform: uppercase; }
+        .dashboard-title { max-width: none; margin: 0; font: 700 clamp(38px, 7vw, 56px)/1.08 Georgia, "Times New Roman", serif; }
+        .dashboard-copy { margin: 14px 0 34px; color: #bdb4ce; line-height: 1.6; }
+        .dashboard-stats { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid #39304f; border-bottom: 1px solid #39304f; }
+        .dashboard-stat { min-height: 110px; padding: 22px 18px 22px 0; }
+        .dashboard-stat + .dashboard-stat { padding-left: 18px; border-left: 1px solid #39304f; }
+        .dashboard-stat span { display: block; margin-bottom: 10px; color: #a99bbf; font-size: 10px; font-weight: 700; letter-spacing: 1.1px; }
+        .dashboard-stat strong { color: #eee9ff; font-size: 15px; line-height: 1.45; }
+        .dashboard-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+        .dashboard-actions .entry-button, .dashboard-actions .entry-secondary { min-height: 48px; margin: 0; }
+        .teacher-learners { margin-top: 46px; padding-top: 24px; border-top: 1px solid #39304f; }
+        .teacher-learners-heading { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; margin-bottom: 16px; }
+        .teacher-learners-heading h2 { margin: 0; font: 700 22px/1.3 Georgia, "Times New Roman", serif; }
+        .teacher-learners-heading span { color: #a99bbf; font-size: 12px; }
+        .leaderboard-page { min-height: 100vh; min-height: 100svh; background: #0c0915; color: #f5f2ff; font-family: "Trebuchet MS", sans-serif; }
+        .leaderboard-header { min-height: 50px; padding: 0 max(18px, calc((100vw - 1490px) / 2)); display: flex; align-items: center; justify-content: space-between; gap: 16px; border-bottom: 1px solid #292432; background: #0c0a11; }
+        .leaderboard-header h1 { margin: 0; color: #c7afff; font: 700 22px/1.2 Georgia, "Times New Roman", serif; }
+        .leaderboard-back { min-height: 36px; padding: 0 14px; border: 1px solid #39304f; border-radius: 8px; background: #151120; color: #e8e1f5; font: 13px "Trebuchet MS", sans-serif; cursor: pointer; }
+        .leaderboard-main { width: min(calc(100% - 36px), 812px); margin: 32px auto; }
+        .leaderboard-rank { min-height: 150px; display: grid; align-content: center; justify-items: center; gap: 7px; border: 1px solid #39304f; border-radius: 16px; background: #17131f; text-align: center; }
+        .leaderboard-rank p { margin: 0; color: #9075c8; font-size: 13px; }
+        .leaderboard-rank strong { color: #c7afff; font: 700 44px/1 Georgia, "Times New Roman", serif; }
+        .leaderboard-rank span { color: #a99bbf; font-size: 12px; }
+        .leaderboard-sort { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0; }
+        .leaderboard-sort button { min-height: 38px; padding: 0 14px; border: 1px solid #39304f; border-radius: 8px; background: #151120; color: #c4bdcf; font: 13px "Trebuchet MS", sans-serif; cursor: pointer; }
+        .leaderboard-sort button[aria-pressed="true"] { border-color: #9a7cda; color: #c7afff; }
+        .leaderboard-table-wrap { overflow-x: auto; padding: 20px; border: 1px solid #39304f; border-radius: 16px; background: #100e16; }
+        .learner-table { width: 100%; min-width: 620px; border-collapse: collapse; text-align: left; }
+        .learner-table th { padding: 14px 12px; border-bottom: 1px solid #39304f; color: #9075c8; font-size: 11px; letter-spacing: 1px; text-transform: uppercase; }
+        .learner-table td { padding: 14px 12px; color: #c4bdcf; font-size: 13px; white-space: nowrap; }
+        .learner-table tbody tr:nth-child(odd) { background: #1b1720; }
+        .learner-table tbody tr.is-current { color: #c7afff; outline: 1px solid #49396a; }
+        .learner-table td:first-child, .learner-table td:nth-child(2), .learner-table td:nth-child(3) { font-weight: 700; }
+        .learner-table .empty-records { padding: 28px 12px; color: #a99bbf; text-align: center; }
+        .teacher-learners .leaderboard-table-wrap { padding: 10px; border-radius: 8px; }
+        .teacher-learners .learner-table { min-width: 600px; }
+        body.theme-light .leaderboard-page, body.theme-nature .leaderboard-page { background: var(--paper); color: var(--ink); }
+        body.theme-light .leaderboard-header, body.theme-nature .leaderboard-header { border-color: var(--line); background: #e5eee7; }
+        body.theme-light .leaderboard-rank, body.theme-nature .leaderboard-rank,
+        body.theme-light .leaderboard-table-wrap, body.theme-nature .leaderboard-table-wrap { border-color: var(--line); background: #fff; }
+        body.theme-light .leaderboard-table td, body.theme-nature .leaderboard-table td { color: var(--ink); }
+        body.theme-blue .leaderboard-page { background: #0b1627; }
+        body.theme-blue .leaderboard-header, body.theme-blue .leaderboard-rank, body.theme-blue .leaderboard-table-wrap { border-color: var(--line); background: #13233a; }
+
+        @media (max-width: 520px) {
+            .entry-screen { padding-right: 20px; padding-left: 20px; }
+            .entry-brand { margin-bottom: 26px; }
+            .entry-copy { margin-bottom: 32px; }
+            .dashboard-page { padding: 22px 20px; }
+            .dashboard-stat { padding-right: 10px; }
+            .dashboard-stat + .dashboard-stat { padding-left: 10px; }
+            .dashboard-stat strong { font-size: 13px; }
+            .leaderboard-table-wrap { padding: 10px; }
+            .teacher-learners-heading { align-items: flex-start; flex-direction: column; gap: 6px; }
+        }
+
+        body.dark-mode {
+            color-scheme: dark;
+            --ink: #eeeaf4;
+            --muted: #b6afc2;
+            --paper: #100e16;
+            --green: #17131f;
+            --lime: #c7afff;
+            --line: #373140;
+        }
+
+        body.dark-mode .topbar { background: #0c0a11; }
+        body.dark-mode .article-heading { background: #17131f; }
+        body.dark-mode .term { color: #b6e8cc; border-color: #7bb895; }
+        body.dark-mode .term::after { background: #292432; }
+
+        body.theme-light {
+            color-scheme: light;
+            --ink: #202b28;
+            --muted: #65726e;
+            --paper: #f5f7f2;
+            --green: #e5eee7;
+            --lime: #436f53;
+            --line: #d4ddd6;
+        }
+        body.theme-nature {
+            color-scheme: light;
+            --ink: #203026;
+            --muted: #69766a;
+            --paper: #f0f4e9;
+            --green: #dbe8d4;
+            --lime: #496943;
+            --line: #cfdbc9;
+        }
+        body.theme-blue {
+            color-scheme: dark;
+            --ink: #e7edf8;
+            --muted: #a9b8ce;
+            --paper: #101b2c;
+            --green: #13233a;
+            --lime: #83c8e8;
+            --line: #293d57;
+        }
+        body.theme-light .topbar, body.theme-nature .topbar { background: #e5eee7; color: #26382e; }
+        body.theme-light .topbar-note, body.theme-nature .topbar-note { color: #596d60; }
+        body.theme-light .article-heading, body.theme-nature .article-heading { background: #e5eee7; color: #202b28; }
+        body.theme-light .subtitle, body.theme-nature .subtitle { color: #53635a; }
+        body.theme-light .student-hud, body.theme-nature .student-hud { background: var(--paper); color: var(--ink); }
+        body.theme-light .welcome-back, body.theme-nature .welcome-back { color: var(--muted); }
+        body.theme-light .welcome-back strong, body.theme-nature .welcome-back strong,
+        body.theme-light .stat-chip strong, body.theme-nature .stat-chip strong { color: var(--ink); }
+        body.theme-light .stat-chip, body.theme-nature .stat-chip { border-color: var(--line); color: var(--ink); }
+        body.theme-light .lesson-tabs, body.theme-nature .lesson-tabs { border-color: var(--line); }
+        body.theme-light .lesson-tab, body.theme-nature .lesson-tab { color: #58675e; }
+        body.theme-light .lesson-tab:hover, body.theme-nature .lesson-tab:hover { background: #e4ebe3; color: #203026; }
+        body.theme-blue .topbar, body.theme-blue .article-heading, body.theme-blue .student-hud { background: #13233a; }
+        body.theme-blue .student-hud { color: #e7edf8; }
+        body.theme-blue .stat-chip { border-color: var(--line); color: #d8e3f3; }
+        body.theme-blue .stat-chip strong { color: #fff; }
+        body.theme-blue .topbar-note { color: #a9bed5; }
+        body.theme-light .term, body.theme-nature .term { color: #28613e; }
+        body.theme-blue .term { color: #8ed8f0; border-color: #64aeca; }
+
+        .topbar { flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
+        .topbar { padding-right: max(20px, calc((100vw - 944px) / 2)); padding-left: max(20px, calc((100vw - 944px) / 2)); }
+        .brand-stack { display: grid; gap: 4px; }
+        .lesson-controls { display: flex; flex-wrap: wrap; align-items: center; justify-content: flex-end; gap: 7px; }
+        .control-button {
+            min-height: 34px;
+            padding: 0 10px;
+            border: 1px solid #51475f;
+            border-radius: 7px;
+            background: #201b2a;
+            color: #eeeaf4;
+            font: 12px "Trebuchet MS", sans-serif;
+            cursor: pointer;
+        }
+        .control-select {
+            min-height: 34px;
+            padding: 0 8px;
+            border: 1px solid #51475f;
+            border-radius: 7px;
+            background: #201b2a;
+            color: #eeeaf4;
+            font: 12px "Trebuchet MS", sans-serif;
+        }
+        .volume-level { min-width: 34px; color: #c4bdcf; font: 11px "Trebuchet MS", sans-serif; text-align: center; }
+        .control-button:hover, .control-button[aria-pressed="true"] { border-color: #c7afff; }
+        .student-hud { padding: 14px max(20px, calc((100vw - 944px) / 2)) 0; background: #100e16; color: #eeeaf4; font-family: "Trebuchet MS", sans-serif; }
+        .welcome-back { margin: 0; color: #bdb5cc; font-size: 11px; }
+        .welcome-back strong { color: #fff; }
+        .lesson-stats { display: flex; flex-wrap: wrap; gap: 8px; }
+        .stat-chip { display: inline-flex; align-items: center; gap: 7px; min-height: 32px; padding: 0 11px; border: 1px solid #373140; border-radius: 7px; color: #ddd6eb; font-size: 11px; }
+        .stat-chip strong { color: #fff; }
+        .lesson-tabs { display: flex; gap: 5px; margin: 18px 0 0; padding: 4px; overflow-x: auto; border: 1px solid #373140; border-radius: 11px; background: #15121d; scrollbar-color: #686171 #211e27; scrollbar-width: thin; }
+        .lesson-tab { flex: 0 0 auto; min-height: 38px; padding: 0 12px; border: 0; border-radius: 8px; background: transparent; color: #c4bdcf; font: 12px "Trebuchet MS", sans-serif; white-space: nowrap; cursor: pointer; }
+        .lesson-tab:hover { background: #25212f; color: #fff; }
+        .lesson-tab[aria-selected="true"] { background: #c7afff; color: #201538; font-weight: 700; }
+        body.theme-light .lesson-tabs, body.theme-nature .lesson-tabs { background: #eaf0e9; }
+        body.theme-blue .lesson-tabs { background: #101b2c; }
+        .activity-panel { width: min(100%, 900px); min-height: 360px; margin: 0 auto; padding: 42px 24px 80px; font-family: "Trebuchet MS", sans-serif; }
+        .activity-kicker { margin: 0 0 10px; color: #6b947d; font-size: 11px; font-weight: 700; letter-spacing: 1.4px; text-transform: uppercase; }
+        body.dark-mode .activity-kicker { color: #c7afff; }
+        .activity-title { margin: 0; font: 700 clamp(27px, 5vw, 38px)/1.15 Georgia, "Times New Roman", serif; }
+        .activity-description { max-width: 650px; margin: 12px 0 26px; color: var(--muted); font-size: 15px; line-height: 1.6; }
+        .vocab-list { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+        .vocab-row { display: grid; grid-template-columns: 1fr auto; align-items: center; gap: 12px; padding: 13px 14px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); color: var(--ink); text-align: left; }
+        .vocab-row strong, .vocab-row span { display: block; }
+        .vocab-row span { margin-top: 4px; color: var(--muted); font-size: 13px; line-height: 1.4; }
+        .vocab-translations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 4px 12px; margin-top: 10px; }
+        .vocab-translation { display: flex; gap: 7px; color: var(--muted); font-size: 12px; line-height: 1.4; }
+        .vocab-translation b { min-width: 22px; color: #9075c8; font-size: 10px; }
+        .flashcard-translations { display: grid; gap: 7px; text-align: left; }
+        .flashcard-translations span { color: var(--muted); font: 14px/1.4 "Trebuchet MS", sans-serif; }
+        .flashcard-translations b { display: inline-block; width: 30px; color: #9075c8; font-size: 11px; }
+        .fill-translation-review { margin-top: 12px; padding-top: 10px; border-top: 1px solid var(--line); }
+        .fill-translation-review > strong { display: block; margin-bottom: 7px; color: var(--ink); font: 700 16px/1.3 Georgia, "Times New Roman", serif; }
+        .flashcard-actions, .flashcard-navigation { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-top: 14px; }
+        .recall-button { min-height: 42px; padding: 0 16px; border: 1px solid var(--line); border-radius: 7px; font: 700 13px "Trebuchet MS", sans-serif; cursor: pointer; }
+        .recall-button:disabled { cursor: default; opacity: .65; }
+        .recall-learning { background: #3a1d29; border-color: #a34b62; color: #ffc2cb; }
+        .recall-known { background: #193728; border-color: #43845e; color: #b5f0c7; }
+        .flashcard-navigation .activity-action { margin-top: 0; }
+        .activity-action:disabled { cursor: not-allowed; opacity: .55; }
+        .achievement-overlay { position: fixed; z-index: 1200; inset: 0; display: grid; place-items: center; padding: 18px; background: rgba(5, 4, 12, .78); backdrop-filter: blur(6px); }
+        .celebration-confetti { position: absolute; z-index: 1; inset: 0; overflow: hidden; pointer-events: none; }
+        .confetti-piece { position: absolute; top: 58%; width: 8px; height: 13px; border-radius: 2px; background: var(--confetti-color); opacity: 0; animation: confetti-launch 1500ms cubic-bezier(.12, .68, .28, 1) var(--confetti-delay) forwards; }
+        .confetti-piece.from-left { left: 14px; }
+        .confetti-piece.from-right { right: 14px; }
+        @keyframes confetti-launch {
+            0% { opacity: 0; transform: translate3d(0, 0, 0) rotate(0); }
+            8% { opacity: 1; }
+            100% { opacity: 0; transform: translate3d(var(--confetti-x), var(--confetti-y), 0) rotate(var(--confetti-rotation)); }
+        }
+        .achievement-dialog { width: min(100%, 470px); min-width: 0; max-height: min(90svh, 760px); overflow-y: auto; padding: 26px; border: 1px solid #3a2c59; border-radius: 16px; background: #171126; color: #eee9ff; box-shadow: 0 24px 80px #0009; text-align: center; }
+        .achievement-dialog { position: relative; z-index: 2; }
+        .achievement-icon { margin-bottom: 12px; font-size: 40px; line-height: 1; }
+        .achievement-dialog h3 { margin: 0; color: #c7afff; font: 700 26px/1.25 Georgia, "Times New Roman", serif; }
+        .achievement-level { margin: 8px 0 20px; color: #bdb4ce; font: 14px/1.5 "Trebuchet MS", sans-serif; }
+        .achievement-metrics { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
+        .achievement-metric { min-height: 76px; display: grid; align-content: center; gap: 5px; border: 1px solid #39304f; border-radius: 10px; background: #1d1730; }
+        .achievement-metric strong { color: #c7afff; font: 700 24px/1 Georgia, "Times New Roman", serif; }
+        .achievement-metric span { color: #9075c8; font: 10px "Trebuchet MS", sans-serif; letter-spacing: 1px; }
+        .achievement-results, .achievement-review { margin-top: 18px; padding: 14px; border: 1px solid #39304f; border-radius: 10px; background: #21172f; text-align: left; }
+        .achievement-results h4, .achievement-review h4 { margin: 0 0 9px; color: #ff8b8b; font: 700 11px "Trebuchet MS", sans-serif; letter-spacing: 1px; text-transform: uppercase; }
+        .achievement-items, .achievement-review ul { display: flex; flex-wrap: wrap; gap: 7px; margin: 0; padding: 0; list-style: none; }
+        .achievement-items li, .achievement-review li { color: #d9d2e8; font: 12px/1.5 "Trebuchet MS", sans-serif; }
+        .achievement-continue { width: 100%; min-height: 48px; margin-top: 20px; }
+        body.theme-light .achievement-dialog, body.theme-nature .achievement-dialog { border-color: var(--line); background: var(--paper); color: var(--ink); }
+        body.theme-light .achievement-level, body.theme-nature .achievement-level { color: var(--muted); }
+        body.theme-light .achievement-metric, body.theme-nature .achievement-metric { border-color: var(--line); background: #eaf0e9; }
+        body.theme-light .achievement-results, body.theme-light .achievement-review,
+        body.theme-nature .achievement-results, body.theme-nature .achievement-review { border-color: var(--line); background: #edf1e9; }
+        body.theme-light .achievement-items li, body.theme-light .achievement-review li,
+        body.theme-nature .achievement-items li, body.theme-nature .achievement-review li { color: var(--ink); }
+        body.theme-blue .achievement-dialog { border-color: var(--line); background: #13233a; color: var(--ink); }
+        body.theme-blue .achievement-metric, body.theme-blue .achievement-results, body.theme-blue .achievement-review { border-color: var(--line); background: #101b2c; }
+        @media (prefers-reduced-motion: reduce) { .confetti-piece { animation: none; } }
+        .technique-list { display: grid; gap: 9px; margin: 0 0 20px; padding: 0; list-style: none; }
+        .technique-card { display: grid; grid-template-columns: 38px minmax(0, 1fr); align-items: center; gap: 12px; padding: 14px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+        .technique-number { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 7px; background: #c7afff; color: #201538; font-size: 11px; font-weight: 700; }
+        .technique-card h3 { margin: 0 0 4px; font: 700 16px/1.4 Georgia, "Times New Roman", serif; }
+        .technique-card p { margin: 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+        .vocab-row button { border: 0; background: transparent; color: #7556ad; font: 12px "Trebuchet MS", sans-serif; cursor: pointer; }
+        .activity-action, .answer-option, .match-choice, .flashcard { border: 1px solid var(--line); border-radius: 8px; background: var(--paper); color: var(--ink); font: 14px "Trebuchet MS", sans-serif; cursor: pointer; }
+        .activity-action { min-height: 42px; margin-top: 20px; padding: 0 16px; background: #c7afff; color: #201538; font-weight: 700; }
+        .flashcard { display: grid; width: min(100%, 560px); min-height: 230px; margin: 0 auto; padding: 30px; place-content: center; gap: 12px; text-align: center; }
+        .flashcard small { color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
+        .flashcard strong { font: 700 32px/1.25 Georgia, "Times New Roman", serif; }
+        .activity-center { text-align: center; }
+        .activity-progress { margin: 18px 0 0; color: var(--muted); font-size: 13px; }
+        .match-board { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 18px; max-width: 760px; }
+        .match-column { display: grid; align-content: start; gap: 9px; }
+        .match-choice, .answer-option { min-height: 46px; padding: 10px 13px; text-align: left; }
+        .match-choice { display: grid; min-height: 60px; align-content: center; gap: 4px; line-height: 1.35; }
+        .match-choice[data-side="meaning"] { min-height: 82px; padding: 8px; }
+        .match-translations { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 6px 8px; }
+        .match-translation { display: grid; grid-template-columns: 22px minmax(0, 1fr); align-items: start; gap: 4px; min-width: 0; font-size: 12px; line-height: 1.25; }
+        .match-translation b { color: var(--muted); font-size: 9px; }
+        .match-translation span { overflow-wrap: anywhere; }
+        .match-choice.is-selected, .answer-option.is-selected { outline: 2px solid #9a7cda; border-color: #9a7cda; }
+        .match-choice.is-matched { border-color: #5b9a77; background: #e5f3e9; color: #20432c; }
+        body.dark-mode .match-choice.is-matched { background: #213c2c; color: #d9f2df; }
+        .question-card { max-width: 700px; padding: 22px; border: 1px solid var(--line); border-radius: 8px; background: var(--paper); }
+        .question-text { margin: 0 0 16px; color: var(--ink); font: 700 20px/1.5 Georgia, "Times New Roman", serif; }
+        .answer-options { display: grid; gap: 9px; }
+        .answer-feedback { min-height: 24px; margin: 14px 0 0; color: var(--muted); font-size: 14px; }
+        .fill-input { width: min(100%, 480px); min-height: 48px; padding: 0 13px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); color: var(--ink); font: 16px "Trebuchet MS", sans-serif; }
+        .reading-tips { max-width: 700px; padding-left: 22px; color: var(--ink); line-height: 1.8; }
+        .reading-tips li { padding-left: 6px; margin-bottom: 10px; }
+        .boss-score { margin-top: 14px; color: var(--muted); font-size: 13px; }
+
+        @media (max-width: 700px) {
+            .topbar { padding-right: 18px; padding-left: 18px; }
+            .lesson-controls { justify-content: flex-start; }
+            .student-hud { padding-right: 18px; padding-left: 18px; }
+            .lesson-tabs { margin-right: -18px; margin-left: -18px; padding-right: 18px; padding-left: 18px; }
+            .activity-panel { padding: 30px 20px 64px; }
+        }
+
+        @media (max-width: 520px) {
+            .vocab-list, .match-board { grid-template-columns: 1fr; }
+            .lesson-stats { gap: 6px; }
+            .stat-chip { padding: 0 8px; font-size: 10px; }
+            .article-heading { padding: 38px 22px 32px; }
+            .article-heading h1 { font-size: 44px; }
+        }
+
+        #lessonHeader .article-heading {
+            padding: 30px 24px 22px;
+            background: var(--paper);
+            color: var(--ink);
+        }
+        #lessonHeader .heading-inner { width: min(100%, 960px); }
+        #lessonHeader .eyebrow { margin-bottom: 9px; }
+        #lessonHeader .article-heading h1 { font-size: clamp(32px, 4vw, 44px); line-height: 1.12; }
+        #lessonHeader .subtitle { margin: 12px 0 16px; color: var(--muted); font-size: 15px; }
+        #lessonHeader .article-meta { color: var(--muted); }
+        #articlePanel {
+            width: min(calc(100% - 72px), 960px);
+            margin: 0 auto 48px;
+            padding: 24px 28px;
+            border: 1px solid var(--line);
+            border-radius: 10px;
+            background: var(--paper);
+            font-family: "Trebuchet MS", sans-serif;
+            font-size: 17px;
+            line-height: 1.75;
+        }
+        #articlePanel p { margin-bottom: 17px; }
+        #articlePanel h2 { margin: 30px 0 10px; color: var(--ink); font: 700 24px/1.3 Georgia, "Times New Roman", serif; }
+        body.dark-mode #articlePanel { border-color: #292432; background: #17131f; }
+        body.theme-blue #articlePanel { background: #13233a; }
+
+        @media (max-width: 700px) {
+            #lessonHeader .article-heading { padding: 26px 20px 18px; }
+            #articlePanel { width: calc(100% - 36px); padding: 20px 18px; }
+        }
+    </style>
+</head>
+<body class="dark-mode">
+    <section id="introView" class="entry-screen">
+        <div class="entry-brand">IELTS ALMAZ BY JE</div>
+        <div class="entry-content">
+            <h1 class="entry-title">Balancing Academic Achievement and Practical Skills in Modern Education</h1>
+            <p class="entry-copy">An IELTS reading lesson about balancing academic knowledge with practical skills. Enter your name to begin.</p>
+            <form id="lessonForm" class="entry-form">
+                <label class="visually-hidden" for="learnerName">Your full name</label>
+                <input id="learnerName" class="entry-input" name="name" type="text" placeholder="Your full name..." autocomplete="name" aria-describedby="nameError">
+                <p id="nameError" class="entry-error" role="alert" hidden>Please enter your full name, including your first and last name.</p>
+                <button class="entry-button" type="submit">🚀 Begin Lesson</button>
+            </form>
+            <button id="showDashboard" class="entry-secondary" type="button">👨‍🏫 Teacher Dashboard</button>
+            <p class="entry-footer">IELTS ALMAZ BY JE</p>
+        </div>
+    </section>
+
+    <section id="dashboardGate" class="entry-screen" hidden>
+        <div class="entry-brand">IELTS ALMAZ BY JE</div>
+        <div class="entry-content">
+            <h1 class="entry-title">Teacher Dashboard</h1>
+            <p class="entry-copy">Enter your teacher access code to continue.</p>
+            <form id="dashboardForm" class="entry-form">
+                <label class="visually-hidden" for="dashboardCode">Teacher access code</label>
+                <input id="dashboardCode" class="entry-input" type="password" inputmode="numeric" pattern="[0-9]{4}" maxlength="4" placeholder="4-digit access code" autocomplete="off" required>
+                <p id="codeError" class="entry-error" role="alert" hidden>Incorrect code. Please try again.</p>
+                <button class="entry-button" type="submit">Open Dashboard</button>
+            </form>
+            <button id="cancelDashboard" class="entry-secondary" type="button">Back</button>
+        </div>
+    </section>
+
+    <section id="teacherView" class="dashboard-page" hidden>
+        <div class="dashboard-top">
+            <div class="entry-brand">IELTS ALMAZ BY JE</div>
+            <button id="dashboardHome" class="dashboard-back" type="button">Back to start</button>
+        </div>
+        <main class="dashboard-content">
+            <p class="dashboard-kicker">Teacher workspace</p>
+            <h1 class="dashboard-title">Teacher Dashboard</h1>
+            <p class="dashboard-copy">Your lesson overview is ready.</p>
+            <div class="dashboard-stats">
+                <div class="dashboard-stat"><span>CURRENT LESSON</span><strong>Balancing Academic Achievement and Practical Skills</strong></div>
+                <div class="dashboard-stat"><span>VOCABULARY</span><strong>20 key words</strong></div>
+                <div class="dashboard-stat"><span>READING TIME</span><strong>8 minutes</strong></div>
+            </div>
+            <div class="dashboard-actions">
+                <button id="dashboardStartLesson" class="entry-button" type="button">Open Lesson</button>
+                <button id="dashboardReturn" class="entry-secondary" type="button">Return to welcome</button>
+            </div>
+            <section class="teacher-learners" aria-labelledby="teacherLearnersTitle">
+                <div class="teacher-learners-heading"><h2 id="teacherLearnersTitle">Learner sessions</h2><span id="teacherLearnerCount">0 sessions</span></div>
+                <div class="leaderboard-table-wrap">
+                    <table class="learner-table">
+                        <thead><tr><th>Name</th><th>XP</th><th>Accuracy</th><th>Time</th><th>Date</th></tr></thead>
+                        <tbody id="teacherLearnerRows"></tbody>
+                    </table>
+                </div>
+            </section>
+        </main>
+    </section>
+
+    <section id="leaderboardView" class="leaderboard-page" hidden>
+        <header class="leaderboard-header">
+            <h1>🏆 Leaderboard</h1>
+            <button id="leaderboardBack" class="leaderboard-back" type="button">← Back</button>
+        </header>
+        <main class="leaderboard-main">
+            <section class="leaderboard-rank" aria-live="polite">
+                <p>Your Current Rank</p>
+                <strong id="currentRank">—</strong>
+                <span id="currentRankName">No learner session</span>
+            </section>
+            <div class="leaderboard-sort" role="group" aria-label="Sort learner sessions">
+                <button type="button" data-leaderboard-sort="xp" aria-pressed="true">Sort by XP</button>
+                <button type="button" data-leaderboard-sort="accuracy" aria-pressed="false">Sort by Accuracy</button>
+                <button type="button" data-leaderboard-sort="date" aria-pressed="false">Sort by Date</button>
+            </div>
+            <div class="leaderboard-table-wrap">
+                <table class="learner-table">
+                    <thead><tr><th>#</th><th>Name</th><th>XP</th><th>Accuracy</th><th>Time</th><th>Date</th></tr></thead>
+                    <tbody id="leaderboardRows"></tbody>
+                </table>
+            </div>
+        </main>
+    </section>
+
+    <header id="lessonHeader" hidden>
+        <div class="topbar">
+            <div class="brand-stack">
+                <div class="brand"><span class="brand-mark" aria-hidden="true">A</span><span>IELTS ALMAZ BY JE</span></div>
+                <p class="welcome-back">Welcome back, <strong id="welcomeLearner"></strong></p>
+            </div>
+            <div class="lesson-controls" aria-label="Lesson controls">
+                <label class="visually-hidden" for="themeToggle">Color theme</label>
+                <select id="themeToggle" class="control-select" aria-label="Color theme">
+                    <option value="dark">🌙 Dark</option>
+                    <option value="light">☀ Light</option>
+                    <option value="nature">🌿 Nature</option>
+                    <option value="blue">🌊 Blue</option>
+                </select>
+                <button id="soundToggle" class="control-button" type="button" aria-label="Play a sound sample and toggle spoken vocabulary" aria-pressed="true">🔊 Sound on</button>
+                <button id="leaderboardToggle" class="control-button" type="button">🏆 Leaderboard</button>
+                <button id="volumeDown" class="control-button" type="button" aria-label="Decrease spoken volume">🔉−</button>
+                <span id="volumeLevel" class="volume-level" aria-live="polite">80%</span>
+                <button id="volumeUp" class="control-button" type="button" aria-label="Increase spoken volume">🔊+</button>
+                <button id="fontDown" class="control-button" type="button" aria-label="Decrease article text size">A−</button>
+                <button id="fontUp" class="control-button" type="button" aria-label="Increase article text size">A+</button>
+                <button id="signOut" class="control-button" type="button">Sign out</button>
+            </div>
+        </div>
+        <div class="student-hud">
+            <div class="lesson-stats" aria-live="polite">
+                <span class="stat-chip">⚔ XP <strong id="xpValue">60</strong></span>
+                <span class="stat-chip">🔥 Streak <strong id="streakValue">0</strong></span>
+                <span class="stat-chip">✓ Completed <strong id="completedValue">1/5</strong></span>
+                <span class="stat-chip">◎ Overall <strong id="overallValue">20%</strong></span>
+            </div>
+            <nav class="lesson-tabs" role="tablist" aria-label="Lesson activities">
+                <button class="lesson-tab" type="button" role="tab" aria-selected="true" data-tab="article">📖 Article</button>
+                <button class="lesson-tab" type="button" role="tab" aria-selected="false" data-tab="vocab">🟩 Vocab</button>
+                <button class="lesson-tab" type="button" role="tab" aria-selected="false" data-tab="flashcards">🗂 Flashcards</button>
+                <button class="lesson-tab" type="button" role="tab" aria-selected="false" data-tab="match">🔗 Match</button>
+                <button class="lesson-tab" type="button" role="tab" aria-selected="false" data-tab="mcq">❔ MCQ</button>
+                <button class="lesson-tab" type="button" role="tab" aria-selected="false" data-tab="fillblank">✏ Fill Blank</button>
+                <button class="lesson-tab" type="button" role="tab" aria-selected="false" data-tab="truefalse">☑ T / F / NG</button>
+                <button class="lesson-tab" type="button" role="tab" aria-selected="false" data-tab="finalboss">🏆 Final Boss</button>
+                <button class="lesson-tab" type="button" role="tab" aria-selected="false" data-tab="technique">📚 Reading Strategies</button>
+            </nav>
+        </div>
+        <div class="article-heading">
+            <div class="heading-inner">
+                <p class="eyebrow">Education / 01</p>
+                <h1>Balancing Academic Achievement and Practical Skills in Modern Education</h1>
+                <p class="subtitle">Why modern education needs to unite strong academic foundations with the practical abilities students use beyond the classroom.</p>
+                <div class="article-meta"><span>8 min read</span><span class="meta-dot" aria-hidden="true"></span><span>Education</span></div>
+            </div>
+        </div>
+    </header>
+
+    <main id="lessonMain" hidden>
+        <article id="articlePanel" aria-label="Balancing Academic Achievement and Practical Skills in Modern Education article">
+            <p class="reading-hint">Qalin belgilangan so‘z ustiga olib boring yoki bosing — ma’nosi chiqadi.</p>
+            <p>For generations, academic success has been measured through grades, test scores, and diplomas. Students who <button class="term" type="button" data-meaning="yod oldi" aria-label="memorized: yod oldi" aria-expanded="false">memorized</button> formulas quickly, wrote polished essays, and performed well on standardized exams were considered accomplished, and this model shaped entire education systems across the world. Yet as the job market and society <button class="term" type="button" data-meaning="rivojlanmoq; o‘zgarib bormoq" aria-label="evolve: rivojlanmoq; o‘zgarib bormoq" aria-expanded="false">evolve</button> at an unprecedented pace, a growing debate has emerged around whether traditional academic achievement alone is sufficient to prepare students for life beyond the classroom. Increasingly, educators, parents, and employers agree that practical skills — critical thinking, communication, <button class="term" type="button" data-meaning="moslashuvchanlik" aria-label="adaptability: moslashuvchanlik" aria-expanded="false">adaptability</button>, collaboration, and problem-solving — must be <button class="term" type="button" data-meaning="birlashtirilmoq; kiritilmoq" aria-label="integrated: birlashtirilmoq; kiritilmoq" aria-expanded="false">integrated</button> into education alongside academic knowledge, rather than treated as separate or secondary concerns.</p>
+
+            <h2>The Limits of Traditional Academic Success</h2>
+            <p>A high GPA or a perfect exam score demonstrates that a student can retain information and perform well under standardized, often <button class="term" type="button" data-meaning="sun’iy" aria-label="artificial: sun’iy" aria-expanded="false">artificial</button> conditions. However, it does not necessarily indicate whether that student can collaborate effectively in a team, manage their time under pressure, communicate ideas <button class="term" type="button" data-meaning="ishontiradigan tarzda" aria-label="persuasively: ishontiradigan tarzda" aria-expanded="false">persuasively</button> to a skeptical audience, or adapt when circumstances change unexpectedly and no clear answer exists. Many graduates enter the workforce highly knowledgeable in theory but <button class="term" type="button" data-meaning="tayyor bo‘lmagan" aria-label="unprepared: tayyor bo‘lmagan" aria-expanded="false">unprepared</button> for the practical demands of a job, whether that means running a meeting, resolving a conflict with a colleague, negotiating a deadline, or troubleshooting a problem with no textbook solution. The gap between what is tested in school and what is actually <button class="term" type="button" data-meaning="talab qilinadigan" aria-label="required: talab qilinadigan" aria-expanded="false">required</button> in daily professional life has become one of the most persistent criticisms of conventional education systems, and this criticism has only grown louder as workplaces change faster than curricula can keep up.</p>
+
+            <h2>Why Real-World Skills Matter</h2>
+            <p>Employers today consistently emphasize that technical knowledge, while important, is often not the deciding factor in workplace success. Soft skills such as emotional intelligence, adaptability, and effective communication frequently determine how well someone performs in a professional environment, sometimes outweighing raw technical <button class="term" type="button" data-meaning="mutaxassislik mahorati" aria-label="expertise: mutaxassislik mahorati" aria-expanded="false">expertise</button>. The pace of technological change has also made lifelong learning essential; a skill set that seems perfectly relevant today may become <button class="term" type="button" data-meaning="eskirgan; dolzarbligini yo‘qotgan" aria-label="obsolete: eskirgan; dolzarbligini yo‘qotgan" aria-expanded="false">obsolete</button> within just a few years, meaning students must learn how to learn rather than simply memorize a fixed body of knowledge that may soon lose its relevance. Beyond employment, practical skills also shape how individuals manage personal finances, navigate relationships, resolve everyday conflicts, and make informed decisions as engaged citizens — areas rarely addressed by a purely academic curriculum focused narrowly on grades and test performance.</p>
+
+            <h2>Finding the Right Balance</h2>
+            <p>None of this suggests that academic rigor should be abandoned or diminished. Strong <button class="term" type="button" data-meaning="asosiy; poydevor bo‘ladigan" aria-label="foundational: asosiy; poydevor bo‘ladigan" aria-expanded="false">foundational</button> knowledge in subjects like mathematics, science, history, and literature builds the analytical reasoning, cultural literacy, and disciplined thinking that underpin virtually every profession and area of life. The challenge, then, is not choosing between academics and practical skills but thoughtfully <button class="term" type="button" data-meaning="tarkibiga kiritish" aria-label="incorporating: tarkibiga kiritish" aria-expanded="false">incorporating</button> them so that each reinforces the other. Project-based learning, for instance, allows students to apply theoretical knowledge to solve genuine, often messy problems, reinforcing academic content while simultaneously building teamwork, communication, and critical thinking abilities. Internships, apprenticeships, and community-based projects give students firsthand <button class="term" type="button" data-meaning="bevosita tajriba" aria-label="exposure: bevosita tajriba" aria-expanded="false">exposure</button> to real-world environments where classroom knowledge must be adapted, tested, and often revised under practical <button class="term" type="button" data-meaning="cheklovlar; shart-sharoitlar" aria-label="constraints: cheklovlar; shart-sharoitlar" aria-expanded="false">constraints</button> that no textbook can fully anticipate.</p>
+
+            <h2>The Role of Educators and Institutions</h2>
+            <p>Schools and universities play a <button class="term" type="button" data-meaning="hal qiluvchi; juda muhim" aria-label="crucial: hal qiluvchi; juda muhim" aria-expanded="false">crucial</button> role in this shift toward balanced education. Curricula that incorporate case studies, simulations, debates, and collaborative assignments encourage students to practice decision-making, negotiation, and creative problem-solving in a low-stakes setting before entering the workforce, where mistakes carry heavier consequences. Assessment methods are also evolving, gradually moving beyond multiple-choice exams toward portfolios, presentations, group projects, and real-world outcomes that better <button class="term" type="button" data-meaning="aks ettirmoq; ko‘rsatmoq" aria-label="reflect: aks ettirmoq; ko‘rsatmoq" aria-expanded="false">reflect</button> a student's genuine ability to apply what they've learned rather than simply recall it. Teacher training, too, must adapt accordingly, equipping educators not just to deliver content efficiently but to <button class="term" type="button" data-meaning="ustozlik qilmoq; yo‘l-yo‘riq ko‘rsatmoq" aria-label="mentor: ustozlik qilmoq; yo‘l-yo‘riq ko‘rsatmoq" aria-expanded="false">mentor</button> students in developing the judgment, resilience, and adaptability needed once they step outside the classroom and into unpredictable environments.</p>
+
+            <h2>Looking Ahead</h2>
+            <p>As industries continue to transform through automation and artificial intelligence, the skills that will remain valuable are precisely those that are hardest to <button class="term" type="button" data-meaning="avtomatlashtirmoq" aria-label="automate: avtomatlashtirmoq" aria-expanded="false">automate</button>: creativity, ethical reasoning, adaptability, emotional intelligence, and genuine interpersonal connection. An education system that produces graduates who excel only at recalling information risks leaving them <button class="term" type="button" data-meaning="yetarlicha tayyorlanmagan" aria-label="ill-equipped: yetarlicha tayyorlanmagan" aria-expanded="false">ill-equipped</button> for a world that increasingly rewards those who can think independently, collaborate effectively, and act practically under uncertainty. True educational excellence, therefore, is not a choice between academic achievement and real-world readiness — it is the thoughtful, deliberate <button class="term" type="button" data-meaning="uyg‘unlashuv; birikma" aria-label="fusion: uyg‘unlashuv; birikma" aria-expanded="false">fusion</button> of both, producing individuals who are not only knowledgeable but genuinely capable of thriving amid the complexities and unpredictability of modern life.</p>
+        </article>
+        <section id="activityPanel" class="activity-panel" hidden aria-live="polite"></section>
+    </main>
+    <script src="script.js"></script>
+</body>
+</html>
